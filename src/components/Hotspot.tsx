@@ -21,8 +21,8 @@ export const Hotspot: React.FC<HotspotProps> = ({
       onClick={onClick}
     >
       {children}
-      <div className="absolute -inset-1 animate-pulse bg-blue-500/20 rounded-lg" />
-      <div className="absolute -inset-1 border-2 border-blue-500 rounded-lg" />
+      <div className="absolute -inset-2 animate-pulse bg-blue-500/20 rounded-lg" />
+      <div className="absolute -inset-2 border-2 border-blue-500 rounded-lg" />
     </div>
   );
 };
