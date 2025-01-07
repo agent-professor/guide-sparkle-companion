@@ -22,7 +22,7 @@ export const TourOverlay: React.FC = () => {
   return (
     <div
       className={cn(
-        'fixed inset-0 bg-black/50 z-50 transition-opacity duration-300',
+        'fixed inset-0 bg-black/50 z-50 transition-opacity duration-500',
         'animate-fade-in'
       )}
       onClick={(e) => e.stopPropagation()}
@@ -31,19 +31,26 @@ export const TourOverlay: React.FC = () => {
         <>
           {/* Cutout mask for the highlighted element */}
           <div
-            className="absolute bg-transparent transition-all duration-300 ease-in-out"
+            className="absolute bg-transparent transition-all duration-500 ease-in-out"
             style={{
               ...getElementPosition(currentStep.selector),
-              boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.5)',
+              boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.75)',
             }}
           />
           {/* Ripple animation container */}
           <div
-            className="absolute transition-all duration-300 ease-in-out"
+            className="absolute transition-all duration-500 ease-in-out"
             style={getElementPosition(currentStep.selector)}
           >
-            <div className="absolute -inset-2 animate-[pulse_2s_ease-in-out_infinite] bg-blue-500/20 rounded-lg" />
-            <div className="absolute -inset-2 border-2 border-blue-500 rounded-lg transition-all duration-300" />
+            <div className="absolute -inset-2 border border-white/50 rounded-lg transition-all duration-500" />
+            <div 
+              className="absolute w-2 h-2 bg-white rounded-full animate-[pulse_1.5s_ease-in-out_infinite]"
+              style={{
+                right: '-16px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+              }}
+            />
           </div>
         </>
       )}
