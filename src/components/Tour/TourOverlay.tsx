@@ -31,7 +31,7 @@ export const TourOverlay: React.FC = () => {
         <>
           {/* Cutout mask for the highlighted element */}
           <div
-            className="absolute bg-transparent"
+            className="absolute bg-transparent transition-all duration-300 ease-in-out"
             style={{
               ...getElementPosition(currentStep.selector),
               boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.5)',
@@ -39,11 +39,11 @@ export const TourOverlay: React.FC = () => {
           />
           {/* Ripple animation container */}
           <div
-            className="absolute"
+            className="absolute transition-all duration-300 ease-in-out"
             style={getElementPosition(currentStep.selector)}
           >
-            <div className="absolute -inset-2 animate-pulse bg-blue-500/20 rounded-lg" />
-            <div className="absolute -inset-2 border-2 border-blue-500 rounded-lg" />
+            <div className="absolute -inset-2 animate-[pulse_2s_ease-in-out_infinite] bg-blue-500/20 rounded-lg" />
+            <div className="absolute -inset-2 border-2 border-blue-500 rounded-lg transition-all duration-300" />
           </div>
         </>
       )}
