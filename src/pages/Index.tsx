@@ -1,46 +1,107 @@
 import React, { useState } from 'react';
-import Tour from '@/components/Tour/Tour';
-import { Hotspot } from '@/components/Hotspot';
+import Joyride, { CallBackProps, Status, Step } from 'react-joyride';
 import { Button } from '@/components/ui/button';
 
 const Index = () => {
-  const [isTourOpen, setIsTourOpen] = useState(true);
+  const [runTour, setRunTour] = useState(true);
 
-  const tourSteps = [
+  // Define tour steps
+  const steps: Step[] = [
     {
-      title: 'Welcome to the App',
-      content: 'Let us show you around and help you get started!',
+      target: '.welcome-message',
+      content: 'Welcome to our application! Let us show you around.',
+      placement: 'center',
+      disableBeacon: true,
     },
     {
-      title: 'Create New Items',
-      content: 'Click this button to create new items in your workspace.',
-      selector: '#create-button',
+      target: '#create-button',
+      content: 'Click here to create new items in your workspace.',
+      placement: 'bottom',
     },
     {
-      title: 'View Your Profile',
+      target: '#profile-section',
       content: 'Access your profile settings and preferences here.',
-      selector: '#profile-section',
-    },
+      placement: 'top',
+    }
   ];
+
+  // Handle tour events
+  const handleJoyrideCallback = (data: CallBackProps) => {
+    const { status } = data;
+    
+    if ([Status.FINISHED, Status.SKIPPED].includes(status)) {
+      setRunTour(false);
+    }
+  };
+
+  // Custom styles for the tour
+  const tourStyles = {
+    options: {
+      arrowColor: '#ffffff',
+      backgroundColor: '#ffffff',
+      overlayColor: 'rgba(0, 0, 0, 0.5)',
+      primaryColor: '#007bff',
+      textColor: '#333',
+      zIndex: 1000,
+    },
+    tooltipContainer: {
+      textAlign: 'left' as const,
+      padding: '20px',
+    },
+    buttonNext: {
+      backgroundColor: '#007bff',
+      padding: '8px 16px',
+      fontSize: '14px',
+      borderRadius: '4px',
+      border: 'none',
+      color: '#fff',
+      cursor: 'pointer',
+    },
+    buttonBack: {
+      marginRight: '10px',
+      padding: '8px 16px',
+      fontSize: '14px',
+      borderRadius: '4px',
+      border: '1px solid #ccc',
+      cursor: 'pointer',
+    },
+    buttonSkip: {
+      padding: '8px 16px',
+      fontSize: '14px',
+      border: 'none',
+      background: 'none',
+      color: '#666',
+      cursor: 'pointer',
+    },
+  };
 
   return (
     <div className="min-h-screen p-8">
-      <Tour
-        steps={tourSteps}
-        isOpen={isTourOpen}
-        onClose={() => setIsTourOpen(false)}
-        onComplete={() => console.log('Tour completed!')}
+      <Joyride
+        steps={steps}
+        run={runTour}
+        continuous
+        showProgress
+        showSkipButton
+        hideCloseButton
+        callback={handleJoyrideCallback}
+        styles={tourStyles}
+        locale={{
+          back: 'Previous',
+          close: 'Close',
+          last: 'Finish',
+          next: 'Next',
+          skip: 'Skip tour'
+        }}
       />
 
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <h1 className="text-3xl font-bold welcome-message">Dashboard</h1>
           
-          <Hotspot>
-            <Button id="create-button" variant="default">
-              Create New
-            </Button>
-          </Hotspot>
+          <Button id="create-button" variant="default">
+            Create New
+          </Button>
         </div>
 
         <div id="profile-section" className="bg-white p-6 rounded-lg shadow-sm">
@@ -51,7 +112,7 @@ const Index = () => {
         </div>
 
         <Button 
-          onClick={() => setIsTourOpen(true)}
+          onClick={() => setRunTour(true)}
           variant="outline"
         >
           Restart Tour
