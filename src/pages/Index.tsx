@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Joyride, { CallBackProps, Status, Step } from 'react-joyride';
+import Joyride, { CallBackProps, Step, EVENTS, STATUS } from 'react-joyride';
 import { Button } from '@/components/ui/button';
 
 const Index = () => {
@@ -29,7 +29,7 @@ const Index = () => {
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { status } = data;
     
-    if ([Status.FINISHED, Status.SKIPPED].includes(status)) {
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
       setRunTour(false);
     }
   };
